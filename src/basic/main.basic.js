@@ -1,4 +1,4 @@
-var prodList, sel, addBtn, cartDisp, sum, stockInfo;
+var prodList, $sel, $addBtn, $cartDisp, $sum, $stockInfo;
 var lastSel,
   bonusPts = 0,
   totalAmt = 0,
@@ -17,36 +17,36 @@ function main() {
   var $wrap = document.createElement('div');
   let $hTxt = document.createElement('h1');
 
-  cartDisp = document.createElement('div');
-  sum = document.createElement('div');
-  sel = document.createElement('select');
-  addBtn = document.createElement('button');
+  $cartDisp = document.createElement('div');
+  $sum = document.createElement('div');
+  $sel = document.createElement('select');
+  $addBtn = document.createElement('button');
 
-  stockInfo = document.createElement('div');
+  $stockInfo = document.createElement('div');
 
-  cartDisp.id = 'cart-items';
-  sum.id = 'cart-total';
-  sel.id = 'product-select';
-  addBtn.id = 'add-to-cart';
+  $cartDisp.id = 'cart-items';
+  $sum.id = 'cart-total';
+  $sel.id = 'product-select';
+  $addBtn.id = 'add-to-cart';
 
-  stockInfo.id = 'stock-status';
+  $stockInfo.id = 'stock-status';
   $cont.className = 'bg-gray-100 p-8';
   $wrap.className = 'max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl p-8';
   $hTxt.className = 'text-2xl font-bold mb-4';
-  sum.className = 'text-xl font-bold my-4';
-  sel.className = 'border rounded p-2 mr-2';
-  addBtn.className = 'bg-blue-500 text-white px-4 py-2 rounded';
-  stockInfo.className = 'text-sm text-gray-500 mt-2';
+  $sum.className = 'text-xl font-bold my-4';
+  $sel.className = 'border rounded p-2 mr-2';
+  $addBtn.className = 'bg-blue-500 text-white px-4 py-2 rounded';
+  $stockInfo.className = 'text-sm text-gray-500 mt-2';
   $hTxt.textContent = '장바구니';
-  addBtn.textContent = '추가';
+  $addBtn.textContent = '추가';
   updateSelOpts();
 
   $wrap.appendChild($hTxt);
-  $wrap.appendChild(cartDisp);
-  $wrap.appendChild(sum);
-  $wrap.appendChild(sel);
-  $wrap.appendChild(addBtn);
-  $wrap.appendChild(stockInfo);
+  $wrap.appendChild($cartDisp);
+  $wrap.appendChild($sum);
+  $wrap.appendChild($sel);
+  $wrap.appendChild($addBtn);
+  $wrap.appendChild($stockInfo);
   $cont.appendChild($wrap);
   $root.appendChild($cont);
 
@@ -77,20 +77,20 @@ function main() {
   }, Math.random() * 20000);
 }
 function updateSelOpts() {
-  sel.innerHTML = '';
+  $sel.innerHTML = '';
   prodList.forEach(function (item) {
     var opt = document.createElement('option');
     opt.value = item.id;
 
     opt.textContent = item.name + ' - ' + item.val + '원';
     if (item.q === 0) opt.disabled = true;
-    sel.appendChild(opt);
+    $sel.appendChild(opt);
   });
 }
 function calcCart() {
   totalAmt = 0;
   itemCnt = 0;
-  var cartItems = cartDisp.children;
+  var cartItems = $cartDisp.children;
   var subTot = 0;
   for (var i = 0; i < cartItems.length; i++) {
     (function () {
@@ -135,12 +135,12 @@ function calcCart() {
     totalAmt *= 1 - 0.1;
     discRate = Math.max(discRate, 0.1);
   }
-  sum.textContent = '총액: ' + Math.round(totalAmt) + '원';
+  $sum.textContent = '총액: ' + Math.round(totalAmt) + '원';
   if (discRate > 0) {
     var span = document.createElement('span');
     span.className = 'text-green-500 ml-2';
     span.textContent = '(' + (discRate * 100).toFixed(1) + '% 할인 적용)';
-    sum.appendChild(span);
+    $sum.appendChild(span);
   }
   updateStockInfo();
   renderBonusPts();
@@ -153,7 +153,7 @@ const renderBonusPts = () => {
     ptsTag = document.createElement('span');
     ptsTag.id = 'loyalty-points';
     ptsTag.className = 'text-blue-500 ml-2';
-    sum.appendChild(ptsTag);
+    $sum.appendChild(ptsTag);
   }
   ptsTag.textContent = '(포인트: ' + bonusPts + ')';
 };
@@ -165,12 +165,12 @@ function updateStockInfo() {
       infoMsg += item.name + ': ' + (item.q > 0 ? '재고 부족 (' + item.q + '개 남음)' : '품절') + '\n';
     }
   });
-  stockInfo.textContent = infoMsg;
+  $stockInfo.textContent = infoMsg;
 }
 main();
 
-addBtn.addEventListener('click', function () {
-  var selItem = sel.value;
+$addBtn.addEventListener('click', function () {
+  var selItem = $sel.value;
   var itemToAdd = prodList.find(function (p) {
     return p.id === selItem;
   });
@@ -203,7 +203,7 @@ addBtn.addEventListener('click', function () {
         '<button class="remove-item bg-red-500 text-white px-2 py-1 rounded" data-product-id="' +
         itemToAdd.id +
         '">삭제</button></div>';
-      cartDisp.appendChild(newItem);
+      $cartDisp.appendChild(newItem);
       itemToAdd.q--;
     }
     calcCart();
@@ -211,7 +211,7 @@ addBtn.addEventListener('click', function () {
   }
 });
 
-cartDisp.addEventListener('click', function (event) {
+$cartDisp.addEventListener('click', function (event) {
   var tgt = event.target;
 
   if (tgt.classList.contains('quantity-change') || tgt.classList.contains('remove-item')) {
