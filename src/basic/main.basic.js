@@ -85,8 +85,8 @@ const main = () => {
 
   calcCart();
 
-  setTimeout(function () {
-    setInterval(function () {
+  setTimeout(() => {
+    setInterval(() => {
       let luckyItem = prodList[Math.floor(Math.random() * prodList.length)];
       if (Math.random() < 0.3 && luckyItem.q > 0) {
         luckyItem.val = Math.round(luckyItem.val * 0.8);
@@ -96,10 +96,10 @@ const main = () => {
     }, 30000);
   }, Math.random() * 10000);
 
-  setTimeout(function () {
-    setInterval(function () {
+  setTimeout(() => {
+    setInterval(() => {
       if (lastSel) {
-        let suggest = prodList.find(function (item) {
+        let suggest = prodList.find((item) => {
           return item.id !== lastSel && item.q > 0;
         });
         if (suggest) {
@@ -114,7 +114,7 @@ const main = () => {
 
 const updateSelOpts = () => {
   $sel.innerHTML = '';
-  prodList.forEach(function (item) {
+  prodList.forEach((item) => {
     let $opt = document.createElement('option');
     $opt.value = item.id;
 
@@ -130,7 +130,7 @@ const calcCart = () => {
   let cartItems = $cartDisp.children;
   let subTot = 0;
   for (let i = 0; i < cartItems.length; i++) {
-    (function () {
+    (() => {
       let curItem;
       for (let j = 0; j < prodList.length; j++) {
         if (prodList[j].id === cartItems[i].id) {
@@ -195,20 +195,20 @@ const renderBonusPts = () => {
   ptsTag.textContent = '(포인트: ' + bonusPts + ')';
 };
 
-function updateStockInfo() {
+const updateStockInfo = () => {
   let infoMsg = '';
-  prodList.forEach(function (item) {
+  prodList.forEach((item) => {
     if (item.q < 5) {
       infoMsg += item.name + ': ' + (item.q > 0 ? '재고 부족 (' + item.q + '개 남음)' : '품절') + '\n';
     }
   });
   $stockInfo.textContent = infoMsg;
-}
+};
 main();
 
-$addBtn.addEventListener('click', function () {
+$addBtn.addEventListener('click', () => {
   let selItem = $sel.value;
-  let itemToAdd = prodList.find(function (p) {
+  let itemToAdd = prodList.find((p) => {
     return p.id === selItem;
   });
   if (itemToAdd && itemToAdd.q > 0) {
@@ -234,13 +234,13 @@ $addBtn.addEventListener('click', function () {
   }
 });
 
-$cartDisp.addEventListener('click', function (event) {
+$cartDisp.addEventListener('click', (event) => {
   let tgt = event.target;
 
   if (tgt.classList.contains('quantity-change') || tgt.classList.contains('remove-item')) {
     let prodId = tgt.dataset.productId;
     let itemElem = document.getElementById(prodId);
-    let prod = prodList.find(function (p) {
+    let prod = prodList.find((p) => {
       return p.id === prodId;
     });
     if (tgt.classList.contains('quantity-change')) {
