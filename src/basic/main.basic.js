@@ -94,12 +94,12 @@ function main() {
 function updateSelOpts() {
   $sel.innerHTML = '';
   prodList.forEach(function (item) {
-    var opt = document.createElement('option');
-    opt.value = item.id;
+    var $opt = document.createElement('option');
+    $opt.value = item.id;
 
-    opt.textContent = item.name + ' - ' + item.val + '원';
-    if (item.q === 0) opt.disabled = true;
-    $sel.appendChild(opt);
+    $opt.textContent = item.name + ' - ' + item.val + '원';
+    if (item.q === 0) $opt.disabled = true;
+    $sel.appendChild($opt);
   });
 }
 
