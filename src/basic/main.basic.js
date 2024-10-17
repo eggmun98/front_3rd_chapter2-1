@@ -1,8 +1,18 @@
-var prodList, $sel, $addBtn, $cartDisp, $sum, $stockInfo;
-var lastSel,
-  bonusPts = 0,
-  totalAmt = 0,
-  itemCnt = 0;
+var $sel, $addBtn, $cartDisp, $sum, $stockInfo;
+
+const state = {
+  prodList: [
+    { id: 'p1', name: '상품1', val: 10000, q: 50 },
+    { id: 'p2', name: '상품2', val: 20000, q: 30 },
+    { id: 'p3', name: '상품3', val: 30000, q: 20 },
+    { id: 'p4', name: '상품4', val: 15000, q: 0 },
+    { id: 'p5', name: '상품5', val: 25000, q: 10 },
+  ],
+  lastSel: null,
+  bonusPts: 0,
+  totalAmt: 0,
+  itemCnt: 0,
+};
 
 function createItemHTML(item) {
   return `
@@ -15,15 +25,9 @@ function createItemHTML(item) {
     `;
 }
 
-function main() {
-  prodList = [
-    { id: 'p1', name: '상품1', val: 10000, q: 50 },
-    { id: 'p2', name: '상품2', val: 20000, q: 30 },
-    { id: 'p3', name: '상품3', val: 30000, q: 20 },
-    { id: 'p4', name: '상품4', val: 15000, q: 0 },
-    { id: 'p5', name: '상품5', val: 25000, q: 10 },
-  ];
+let { prodList, lastSel, bonusPts, totalAmt, itemCnt } = state;
 
+function main() {
   var $root = document.getElementById('app');
   let $cont = document.createElement('div');
   var $wrap = document.createElement('div');
@@ -49,8 +53,10 @@ function main() {
   $sel.className = 'border rounded p-2 mr-2';
   $addBtn.className = 'bg-blue-500 text-white px-4 py-2 rounded';
   $stockInfo.className = 'text-sm text-gray-500 mt-2';
+
   $hTxt.textContent = '장바구니';
   $addBtn.textContent = '추가';
+
   updateSelOpts();
 
   $wrap.appendChild($hTxt);
@@ -201,11 +207,11 @@ $addBtn.addEventListener('click', function () {
         alert('재고가 부족합니다.');
       }
     } else {
-      var newItem = document.createElement('div');
-      newItem.id = itemToAdd.id;
-      newItem.className = 'flex justify-between items-center mb-2';
-      newItem.innerHTML = createItemHTML(itemToAdd);
-      $cartDisp.appendChild(newItem);
+      var $newItem = document.createElement('div');
+      $newItem.id = itemToAdd.id;
+      $newItem.className = 'flex justify-between items-center mb-2';
+      $newItem.innerHTML = createItemHTML(itemToAdd);
+      $cartDisp.appendChild($newItem);
       itemToAdd.q--;
     }
     calcCart();
