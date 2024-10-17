@@ -1,4 +1,16 @@
-let $sel, $addBtn, $cartDisp, $sum, $stockInfo;
+const dom = {
+  $sel: null,
+  $addBtn: null,
+  $cartDisp: null,
+  $sum: null,
+  $stockInfo: null,
+  $root: null,
+  $cont: null,
+  $wrap: null,
+  $hTxt: null,
+};
+
+let { $sel, $addBtn, $cartDisp, $sum, $stockInfo, $root, $cont, $wrap, $hTxt } = dom;
 
 const state = {
   prodList: [
@@ -27,10 +39,10 @@ function createItemHTML(item) {
 }
 
 function main() {
-  let $root = document.getElementById('app');
-  let $cont = document.createElement('div');
-  let $wrap = document.createElement('div');
-  let $hTxt = document.createElement('h1');
+  $root = document.getElementById('app');
+  $cont = document.createElement('div');
+  $wrap = document.createElement('div');
+  $hTxt = document.createElement('h1');
 
   $cartDisp = document.createElement('div');
   $sum = document.createElement('div');
