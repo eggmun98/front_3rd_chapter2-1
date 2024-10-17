@@ -27,7 +27,7 @@ const state = {
 };
 let { prodList, lastSel, bonusPts, totalAmt, itemCnt } = state;
 
-function createItemHTML(item) {
+const createItemHTML = (item) => {
   return `
       <span>${item.name} - ${item.val}원 x 1</span>
       <div>
@@ -36,7 +36,7 @@ function createItemHTML(item) {
         <button class="remove-item bg-red-500 text-white px-2 py-1 rounded" data-product-id="${item.id}">삭제</button>
       </div>
     `;
-}
+};
 
 const initDom = () => {
   $root = document.getElementById('app');
@@ -78,7 +78,7 @@ const initDom = () => {
   $root.appendChild($cont);
 };
 
-function main() {
+const main = () => {
   initDom();
 
   updateSelOpts();
@@ -110,9 +110,9 @@ function main() {
       }
     }, 60000);
   }, Math.random() * 20000);
-}
+};
 
-function updateSelOpts() {
+const updateSelOpts = () => {
   $sel.innerHTML = '';
   prodList.forEach(function (item) {
     let $opt = document.createElement('option');
@@ -122,9 +122,9 @@ function updateSelOpts() {
     if (item.q === 0) $opt.disabled = true;
     $sel.appendChild($opt);
   });
-}
+};
 
-function calcCart() {
+const calcCart = () => {
   totalAmt = 0;
   itemCnt = 0;
   let cartItems = $cartDisp.children;
@@ -181,7 +181,7 @@ function calcCart() {
   }
   updateStockInfo();
   renderBonusPts();
-}
+};
 
 const renderBonusPts = () => {
   bonusPts += Math.floor(totalAmt / 1000);
