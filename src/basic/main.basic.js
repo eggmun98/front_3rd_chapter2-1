@@ -38,7 +38,7 @@ function createItemHTML(item) {
     `;
 }
 
-function main() {
+const initDom = () => {
   $root = document.getElementById('app');
   $cont = document.createElement('div');
   $wrap = document.createElement('div');
@@ -68,8 +68,6 @@ function main() {
   $hTxt.textContent = '장바구니';
   $addBtn.textContent = '추가';
 
-  updateSelOpts();
-
   $wrap.appendChild($hTxt);
   $wrap.appendChild($cartDisp);
   $wrap.appendChild($sum);
@@ -78,6 +76,12 @@ function main() {
   $wrap.appendChild($stockInfo);
   $cont.appendChild($wrap);
   $root.appendChild($cont);
+};
+
+function main() {
+  initDom();
+
+  updateSelOpts();
 
   calcCart();
 
