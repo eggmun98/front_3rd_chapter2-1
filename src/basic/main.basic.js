@@ -3,6 +3,18 @@ var lastSel,
   bonusPts = 0,
   totalAmt = 0,
   itemCnt = 0;
+
+function createItemHTML(item) {
+  return `
+      <span>${item.name} - ${item.val}원 x 1</span>
+      <div>
+        <button class="quantity-change bg-blue-500 text-white px-2 py-1 rounded mr-1" data-product-id="${item.id}" data-change="-1">-</button>
+        <button class="quantity-change bg-blue-500 text-white px-2 py-1 rounded mr-1" data-product-id="${item.id}" data-change="1">+</button>
+        <button class="remove-item bg-red-500 text-white px-2 py-1 rounded" data-product-id="${item.id}">삭제</button>
+      </div>
+    `;
+}
+
 function main() {
   prodList = [
     { id: 'p1', name: '상품1', val: 10000, q: 50 },
@@ -51,6 +63,7 @@ function main() {
   $root.appendChild($cont);
 
   calcCart();
+
   setTimeout(function () {
     setInterval(function () {
       var luckyItem = prodList[Math.floor(Math.random() * prodList.length)];
@@ -61,6 +74,7 @@ function main() {
       }
     }, 30000);
   }, Math.random() * 10000);
+
   setTimeout(function () {
     setInterval(function () {
       if (lastSel) {
@@ -76,6 +90,7 @@ function main() {
     }, 60000);
   }, Math.random() * 20000);
 }
+
 function updateSelOpts() {
   $sel.innerHTML = '';
   prodList.forEach(function (item) {
@@ -87,6 +102,7 @@ function updateSelOpts() {
     $sel.appendChild(opt);
   });
 }
+
 function calcCart() {
   totalAmt = 0;
   itemCnt = 0;
@@ -188,21 +204,7 @@ $addBtn.addEventListener('click', function () {
       var newItem = document.createElement('div');
       newItem.id = itemToAdd.id;
       newItem.className = 'flex justify-between items-center mb-2';
-      newItem.innerHTML =
-        '<span>' +
-        itemToAdd.name +
-        ' - ' +
-        itemToAdd.val +
-        '원 x 1</span><div>' +
-        '<button class="quantity-change bg-blue-500 text-white px-2 py-1 rounded mr-1" data-product-id="' +
-        itemToAdd.id +
-        '" data-change="-1">-</button>' +
-        '<button class="quantity-change bg-blue-500 text-white px-2 py-1 rounded mr-1" data-product-id="' +
-        itemToAdd.id +
-        '" data-change="1">+</button>' +
-        '<button class="remove-item bg-red-500 text-white px-2 py-1 rounded" data-product-id="' +
-        itemToAdd.id +
-        '">삭제</button></div>';
+      newItem.innerHTML = createItemHTML(itemToAdd);
       $cartDisp.appendChild(newItem);
       itemToAdd.q--;
     }
